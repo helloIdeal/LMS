@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #666;
+            text-align: center;
+            position: relative;
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
+        }
+
+        /* Overlay for better contrast */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 0;
+        }
+
+        /* Header Navigation */
+        .header {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+
+        .nav-btn {
+            background: #26D0CE;
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid black;
+        }
+
+        .nav-btn:hover {
+            background: #1fb3b1;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(38, 208, 206, 0.3);
+        }
+
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 120px);
+            padding: 20px;
+        }
+
+        /* Search Container */
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 50px;
+            border: 4px solid black;
+            overflow: hidden;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-container:focus-within {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 25px 40px;
+            font-size: 24px;
+            color: #333;
+            background: transparent;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #666;
+            font-size: 24px;
+        }
+
+        .search-btn {
+            background: #26D0CE;
+            border: none;
+            padding: 25px 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border-left: 3px solid black;
+        }
+
+        .search-btn:hover {
+            background: #1fb3b1;
+        }
+
+        .search-icon {
+            width: 30px;
+            height: 30px;
+            fill: black;
+        }
+
+        /* Search Results */
+        .search-results {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 3px solid black;
+            display: none;
+        }
+
+        .result-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .result-item:hover {
+            background-color: rgba(38, 208, 206, 0.1);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .result-author {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ccc;
+            border-top: 3px solid #26D0CE;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .nav-btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            
+            .search-container {
+                max-width: 90%;
+            }
+            
+            .search-input {
+                padding: 20px 30px;
+                font-size: 20px;
+            }
+            
+            .search-input::placeholder {
+                font-size: 20px;
+            }
+            
+            .search-btn {
+                padding: 20px 25px;
+            }
+            
+            .search-icon {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background Placeholder -->
+    <div class="video-background">
+        <div class="video-placeholder">
+            <div>
+                <h3>Library Background Video</h3>
+                <p>Replace this with your MP4 video file</p>
+                <small>Add: &lt;video autoplay muted loop&gt;&lt;source src="library-bg.mp4" type="video/mp4"&gt;&lt;/video&gt;</small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="overlay"></div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <button class="nav-btn" onclick="goHome()">Home</button>
+        <button class="nav-btn" onclick="showLogin()">Login</button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="search-container">
+            <input 
+                type="text" 
+                class="search-input" 
+                placeholder="Search for your books here..." 
+                id="bookSearch"
+                onkeypress="handleKeyPress(event)"
+            >
+            <button class="search-btn" onclick="performSearch()">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="loading" id="loading">Searching books...</div>
+
+        <div class="search-results" id="searchResults">
+            <!-- Search results will appear here -->
+        </div>
+    </main>
+
+    <script>
+        // Sample book data for demonstration
+        const sampleBooks = [
+            { title: "To Kill a Mockingbird", author: "Harper Lee", isbn: "9780061120084", available: true },
+            { title: "1984", author: "George Orwell", isbn: "9780451524935", available: true },
+            { title: "Pride and Prejudice", author: "Jane Austen", isbn: "9780141439518", available: false },
+            { title: "The Great Gatsby", author: "F. Scott Fitzgerald", isbn: "9780743273565", available: true },
+            { title: "The Catcher in the Rye", author: "J.D. Salinger", isbn: "9780316769488", available: true },
+            { title: "Lord of the Flies", author: "William Golding", isbn: "9780571056866", available: false },
+            { title: "Jane Eyre", author: "Charlotte Brontë", isbn: "9780141441146", available: true },
+            { title: "The Hobbit", author: "J.R.R. Tolkien", isbn: "9780547928227", available: true }
+        ];
+
+        // Navigation Functions
+        function goHome() {
+            alert('Navigating to Home page...');
+            // window.location.href = 'home.html';
+        }
+
+        function showLogin() {
+            alert('Opening Login page...');
+            // window.location.href = 'login.html';
+        }
+
+        // Search Functions
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('bookSearch').value.trim();
+            const loading = document.getElementById('loading');
+            const resultsContainer = document.getElementById('searchResults');
+
+            if (!searchTerm) {
+                alert('Please enter a search term');
+                return;
+            }
+
+            // Show loading
+            loading.style.display = 'block';
+            resultsContainer.style.display = 'none';
+
+            // Simulate API call delay
+            setTimeout(() => {
+                const results = searchBooks(searchTerm);
+                displayResults(results);
+                loading.style.display = 'none';
+            }, 1000);
+        }
+
+        function searchBooks(searchTerm) {
+            return sampleBooks.filter(book => 
+                book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                book.author.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        function displayResults(results) {
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="result-item">
+                        <div class="result-title">No books found</div>
+                        <div class="result-author">Try searching with different keywords</div>
+                    </div>
+                `;
+            } else {
+                resultsContainer.innerHTML = results.map(book => `
+                    <div class="result-item" onclick="selectBook('${book.isbn}')">
+                        <div class="result-title">${book.title}</div>
+                        <div class="result-author">by ${book.author} - ${book.available ? '<span style="color: green;">Available</span>' : '<span style="color: red;">Checked Out</span>'}</div>
+                    </div>
+                `).join('');
+            }
+            
+            resultsContainer.style.display = 'block';
+        }
+
+        function selectBook(isbn) {
+            const book = sampleBooks.find(b => b.isbn === isbn);
+            if (book) {
+                if (book.available) {
+                    if (confirm(`Would you like to check out "${book.title}" by ${book.author}?`)) {
+                        alert(`"${book.title}" has been added to your checkout list!`);
+                        // Here you would typically send a request to your backend
+                    }
+                } else {
+                    alert(`"${book.title}" is currently checked out. Would you like to place a hold on it?`);
+                    // Here you could implement a hold system
+                }
+            }
+        }
+
+        // Add focus effect to search input
+        document.getElementById('bookSearch').addEventListener('focus', function() {
+            this.parentElement.style.transform = 'translateY(-3px)';
+        });
+
+        document.getElementById('bookSearch').addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.style.transform = 'translateY(0)';
+            }
+        });
+
+        // Clear results when input is cleared
+        document.getElementById('bookSearch').addEventListener('input', function() {
+            if (!this.value.trim()) {
+                document.getElementById('searchResults').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
