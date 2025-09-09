@@ -161,7 +161,7 @@ const HomePage = () => {
 
         <div className="welcome-section">
           <div className="welcome-message">
-            <h2>Welcome to the Library Management System</h2>
+            <h2>Welcome to The Ideal Library</h2>
             <p>Search for books using the search bar above</p>
           </div>
         </div>

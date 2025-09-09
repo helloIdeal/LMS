@@ -27,8 +27,7 @@ const AdminDashboard = () => {
   };
 
   const handleMemberManagement = () => {
-    // TODO: Navigate to member management page
-    console.log('Navigate to Member Management');
+    navigate('/member-management');
   };
 
   const handleOverdueFines = () => {

@@ -78,13 +78,11 @@ const ProfileModal = ({ isOpen, onClose, user, onUserUpdate }) => {
     setSuccess('');
 
     try {
-      // Prepare update data - only include editable fields
+      // Prepare update data - only include editable fields: email, password, address, phone
       const updateData = {
-        fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
-        address: formData.address,
-        membershipType: formData.membershipType
+        address: formData.address
       };
 
       // Add password only if it's being changed
@@ -186,14 +184,26 @@ const ProfileModal = ({ isOpen, onClose, user, onUserUpdate }) => {
                 </div>
               </div>
 
-              <div className="form-group readonly">
-                <label>Membership Expires:</label>
-                <input
-                  type="text"
-                  value={formatDate(formData.membershipEndDate)}
-                  readOnly
-                  className="readonly-input"
-                />
+              <div className="form-row">
+                <div className="form-group readonly">
+                  <label>Full Name:</label>
+                  <input
+                    type="text"
+                    value={formData.fullName}
+                    readOnly
+                    className="readonly-input"
+                  />
+                </div>
+
+                <div className="form-group readonly">
+                  <label>Membership Expires:</label>
+                  <input
+                    type="text"
+                    value={formatDate(formData.membershipEndDate)}
+                    readOnly
+                    className="readonly-input"
+                  />
+                </div>
               </div>
             </div>
 
@@ -201,19 +211,6 @@ const ProfileModal = ({ isOpen, onClose, user, onUserUpdate }) => {
             <div className="form-section">
               <h3>Personal Information (Editable)</h3>
               
-              <div className="form-group">
-                <label htmlFor="fullName">Full Name:</label>
-                <input
-                  type="text"
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  placeholder="Enter your full name"
-                  disabled={isLoading}
-                />
-              </div>
-
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="email">Email: *</label>
