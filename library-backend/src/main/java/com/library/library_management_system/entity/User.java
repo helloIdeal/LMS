@@ -1,6 +1,8 @@
+// src/main/java/com/library/library_management_system/entity/User.java
 package com.library.library_management_system.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,10 +50,12 @@ public class User {
     private LocalDateTime updatedAt;
     
     // One user can have many borrow transactions
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BorrowTransaction> borrowTransactions;
     
     // One user can have many reservations
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations;
     

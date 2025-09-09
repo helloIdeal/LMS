@@ -1,6 +1,8 @@
+// src/main/java/com/library/library_management_system/entity/Book.java
 package com.library.library_management_system.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,10 +53,12 @@ public class Book {
     private LocalDateTime updatedAt;
     
     // One book can have many borrow transactions
+    @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BorrowTransaction> borrowTransactions;
     
     // One book can have many reservations
+    @JsonIgnore
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations;
     

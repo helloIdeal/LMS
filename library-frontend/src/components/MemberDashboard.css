@@ -1,0 +1,455 @@
+/* src/components/MemberDashboard.css */
+
+.member-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header Section */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(32, 201, 151, 0.1);
+  margin-bottom: 30px;
+  border: 2px solid rgba(32, 201, 151, 0.1);
+}
+
+.header-left h1 {
+  color: #20c997;
+  margin: 0 0 10px 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.header-left p {
+  color: #666;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #c82333, #bd2130);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(32, 201, 151, 0.1);
+  border: 2px solid rgba(32, 201, 151, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dashboard-section:hover {
+  border-color: rgba(32, 201, 151, 0.2);
+  box-shadow: 0 12px 40px rgba(32, 201, 151, 0.15);
+}
+
+.dashboard-section h2 {
+  color: #20c997;
+  margin: 0 0 25px 0;
+  font-size: 24px;
+  font-weight: 700;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #20c997;
+  letter-spacing: 0.5px;
+}
+
+/* Tables */
+.profile-table-container,
+.borrowings-table-container,
+.reservations-table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+}
+
+.profile-table,
+.borrowings-table,
+.reservations-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.profile-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: top;
+}
+
+.profile-table td:first-child {
+  background: #f8f9fa;
+  width: 200px;
+  color: #20c997;
+  font-weight: 600;
+}
+
+.profile-table td:last-child {
+  color: #333;
+  font-weight: 500;
+}
+
+.borrowings-table th,
+.reservations-table th {
+  background: linear-gradient(135deg, #20c997, #1ba085);
+  color: white;
+  padding: 18px 15px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.borrowings-table td,
+.reservations-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e9ecef;
+  color: #333;
+  font-weight: 500;
+}
+
+.borrowings-table tr:hover,
+.reservations-table tr:hover {
+  background: #f8f9fa;
+}
+
+.overdue-row {
+  background: rgba(220, 53, 69, 0.05) !important;
+  border-left: 4px solid #dc3545;
+}
+
+.overdue-row:hover {
+  background: rgba(220, 53, 69, 0.1) !important;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.status-badge.borrowed {
+  background: #20c997;
+  color: white;
+}
+
+.status-badge.overdue {
+  background: #dc3545;
+  color: white;
+}
+
+.status-badge.renewed {
+  background: #ffc107;
+  color: #333;
+}
+
+.status-badge.active {
+  background: #20c997;
+  color: white;
+}
+
+.status-badge.available {
+  background: #28a745;
+  color: white;
+}
+
+.status-badge.expired {
+  background: #6c757d;
+  color: white;
+}
+
+/* No Data State */
+.no-data {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.no-data p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Action Buttons */
+.dashboard-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.action-btn {
+  padding: 18px 35px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.action-btn:hover:before {
+  left: 100%;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #20c997, #1ba085);
+  color: white;
+  box-shadow: 0 5px 15px rgba(32, 201, 151, 0.3);
+}
+
+.primary-btn:hover {
+  background: linear-gradient(135deg, #1ba085, #17a673);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(32, 201, 151, 0.4);
+}
+
+.secondary-btn {
+  background: linear-gradient(135deg, #ffc107, #e0a800);
+  color: #333;
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+}
+
+.secondary-btn:hover {
+  background: linear-gradient(135deg, #e0a800, #d39e00);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+}
+
+.secondary-btn:disabled {
+  background: #6c757d;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.secondary-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.tertiary-btn {
+  background: linear-gradient(135deg, #6f42c1, #5a32a3);
+  color: white;
+  box-shadow: 0 5px 15px rgba(111, 66, 193, 0.3);
+}
+
+.tertiary-btn:hover {
+  background: linear-gradient(135deg, #5a32a3, #4e2a8e);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(111, 66, 193, 0.4);
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: #20c997;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(32, 201, 151, 0.3);
+  border-top: 5px solid #20c997;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.loading-container p {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: #dc3545;
+  text-align: center;
+}
+
+.error-container h3 {
+  color: #dc3545;
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.error-container p {
+  margin: 0 0 25px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.retry-btn {
+  background: linear-gradient(135deg, #20c997, #1ba085);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.retry-btn:hover {
+  background: linear-gradient(135deg, #1ba085, #17a673);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(32, 201, 151, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .member-dashboard {
+    padding: 15px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .header-left h1 {
+    font-size: 28px;
+  }
+
+  .dashboard-section {
+    padding: 20px;
+  }
+
+  .dashboard-section h2 {
+    font-size: 20px;
+  }
+
+  .profile-table td {
+    padding: 12px 15px;
+  }
+
+  .profile-table td:first-child {
+    width: 140px;
+    font-size: 14px;
+  }
+
+  .borrowings-table th,
+  .reservations-table th,
+  .borrowings-table td,
+  .reservations-table td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .dashboard-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-btn {
+    min-width: 100%;
+    max-width: 300px;
+  }
+
+  .profile-table-container,
+  .borrowings-table-container,
+  .reservations-table-container {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .borrowings-table,
+  .reservations-table {
+    font-size: 12px;
+  }
+
+  .borrowings-table th,
+  .reservations-table th {
+    padding: 8px 5px;
+  }
+
+  .borrowings-table td,
+  .reservations-table td {
+    padding: 8px 5px;
+  }
+
+  .status-badge {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}

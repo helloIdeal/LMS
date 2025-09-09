@@ -1,6 +1,7 @@
 // src/components/AdminDashboard.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import VideoBackground from './VideoBackground';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -17,8 +18,7 @@ const AdminDashboard = () => {
   };
 
   const handleBookManagement = () => {
-    // TODO: Navigate to book management page
-    console.log('Navigate to Book Management');
+    navigate('/book-management');
   };
 
   const handleLendingManagement = () => {
@@ -42,15 +42,8 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      {/* Video Background */}
-      <div className="video-background">
-        <video autoPlay muted loop playsInline className="video-bg">
-          <source src="/library-bg.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      
-      <div className="overlay"></div>
+      {/* Video Background Component */}
+      <VideoBackground />
 
       {/* Navigation Bar */}
       <nav className="admin-navbar">
